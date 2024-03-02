@@ -41,9 +41,11 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    aria
     bat
     bottom
     curl
+    dig
     eza
     gcc # for neovim (probably required by tree sitter)
     git
@@ -58,8 +60,39 @@
     zsh
     zsh-powerlevel10k
     killall
-    xclip
   ];
+
+  environment.sessionVariables = rec {
+    XDG_CACHE_HOME  = "$HOME/.cache";
+    XDG_CONFIG_HOME = "$HOME/.config";
+    XDG_DATA_HOME   = "$HOME/.local/share";
+    XDG_STATE_HOME  = "$HOME/.local/state";
+
+    # Not officially in the specification
+    XDG_BIN_HOME    = "$HOME/.local/bin";
+    PATH = [ 
+      "${XDG_BIN_HOME}"
+      "$/opt/bin"
+      "$HOME/.local/bin"
+      "$XDG_DATA_HOME/go/bin"
+    ];
+
+    #####################
+    # Clean up home dir #
+    #####################
+    AZURE_CONFIG_DIR = "$XDG_DATA_HOME/azure";
+    CARGO_HOME = "$XDG_DATA_HOME/cargo";
+    DOCKER_CONFIG = "$XDG_CONFIG_HOME/docker";
+    GNUPGHOME = "$XDG_DATA_HOME/gnupg";
+    GOPATH = "$XDG_DATA_HOME/go";
+    HISTFILE = "$XDG_STATE_HOME/zsh/history";
+    LESSHISTFILE = "-";
+    NODE_REPL_HISTORY = "$XDG_DATA_HOME/node_repl_history";
+    ZDOTDIR = "$HOME/.config/zsh";
+
+    GIT_EDITOR = "nvim";
+    EDITOR = "nvim";
+  };
 
   virtualisation.docker.enable = true;
 
@@ -82,11 +115,59 @@
       enableCompletion = true;
       enable = true;
       shellAliases = {
-        vim = "nvim";
-        cat = "bat";
-        ls = "eza";
-        ll = "ls -al";
-        lh = "ls -alh";
+        k9="killall -9";
+        k15="killall -15";
+
+        mv="mv -iv";
+        rm="rm -v";
+
+        ls="eza -h --color=auto --group-directories-first";
+        ll="eza -l";
+        lh="eza -alF";
+        lg="eza -alF | grep -i";
+        
+        sudo="sudo ";
+
+        digs="dig +short";
+        curldoh="curl --doh-url https://cloudflare-dns.com/dns-query";
+        publicip="dig +short myip.opendns.com @resolver1.opendns.com -4";
+        
+        downl="aria2c -c -x 8 -s 8";
+        qrgen=" qrencode -t ANSI";
+
+        # alias watch to itself so it works with other aliases. Pretty cool actually.
+        watch="watch ";
+
+        # Program alternatives
+        cat="bat";
+
+        # Git
+        cdr="cd $(git rev-parse --show-toplevel)"; # jumps to the root path of a git repository
+        gb="git branch";
+        gca="git commit --amend'";
+        gco="git checkout'";
+        gp="git push'";
+        grh="git reset --hard'";
+        gu="git reset HEAD"; # unstage a file
+
+        vim="nvim";
+        du="du -ch";
+        df="df -h";
+        wget="wget --hsts-file=\"$XDG_DATA_HOME/wget-hsts\""; # In order to avoid history file in $HOME"
+
+        # Audio and video downloaders from spotify and youtube
+        yt="yt-dlp --add-metadata -f 'bestvideo[ext=mp4]'";
+        yta="yt-dlp --downloader aria2c";
+
+        # speedtest: get a 100MB file via wget
+        speedtest="wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test100.zip";
+
+        # Weather Report
+        weather="curl https://wttr.in/kathmandu";
+
+        # URL encode and decode
+        urlencode="python -c \"import sys, urllib.parse as ul; [sys.stdout.write(ul.quote_plus(l)) for l in sys.stdin]\"'";
+        urldecode="python -c \"import sys, urllib.parse as ul; [sys.stdout.write(ul.unquote_plus(l)) for l in sys.stdin]\"'";
       };
     };
   };
@@ -95,7 +176,7 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
-  services.openssh.settings.PasswordAuthentication = true;
+  services.openssh.settings.PasswordAuthentication = false;
   services.openssh.settings.PermitRootLogin = "no";
 
   # Open ports in the firewall.

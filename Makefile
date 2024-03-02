@@ -66,6 +66,9 @@ vm/switch:
 		sudo nixos-rebuild switch --flake \"/nix-config#${NIXNAME}\" \
 	"
 
+# This is for use after the installation
+# Lot to be improved
 .PHONY: switch
 switch:
-	nixos-rebuild switch --flake .
+	rsync -azvhP --exclude='.git/' $(MAKEFILE_DIR)/ nixos:/nix-config
+
