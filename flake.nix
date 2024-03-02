@@ -13,8 +13,8 @@
       vm-intel = nixpkgs.lib.nixosSystem {
         modules = [ ./machines/vm-intel.nix ];
       };
-      vm-proxmox = nixpkgs.lib.nixosSystem {
-        modules = [ ./machines/vm-proxmox.nix ];
+      vm-vbox = nixpkgs.lib.nixosSystem {
+        modules = [ ./machines/vm-vbox.nix ];
       };
     };
   };
