@@ -28,11 +28,6 @@
     isNormalUser = true;
     extraGroups = [ "wheel" "docker" ]; # Enable ‘sudo’ for the user.
     shell = pkgs.zsh;
-    packages = with pkgs; [
-      yt-dlp
-      gopls
-      delve
-    ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDs5rFHygPS8uCK+LJ4XOpenVrGk6ZUzNLb6w9eFiUI8 adityathebe"
     ];
@@ -46,20 +41,21 @@
     bottom
     curl
     dig
+    du-dust
     eza
     gcc # for neovim (probably required by tree sitter)
     git
     gnumake
     go
     jq
-    neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    killall
+    neovim
     ripgrep
     tmux
     watch
     wget
     zsh
     zsh-powerlevel10k
-    killall
   ];
 
   environment.sessionVariables = rec {
@@ -104,6 +100,13 @@
   #   enableSSHSupport = true;
   # };
   programs = {
+    neovim = {
+      enable = true;
+      viAlias = true;
+      vimAlias = true;
+      defaultEditor = true;
+    };
+
     zsh = {
       promptInit = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
       ohMyZsh = {
@@ -175,9 +178,15 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-  services.openssh.settings.PasswordAuthentication = false;
-  services.openssh.settings.PermitRootLogin = "no";
+  services.openssh = {
+    enable = true;
+    settings = {
+      PasswordAuthentication = false;
+      PermitRootLogin = "no";
+    };
+  };
+
+  nix.settings.experimental-features = [ "flakes" "nix-command" ];
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -207,10 +216,5 @@
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "23.11"; # Did you read the comment?
-
-  nix.settings.experimental-features = [
-    "flakes"
-    "nix-command"
-  ];
 }
 

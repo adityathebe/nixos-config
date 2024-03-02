@@ -1,5 +1,5 @@
 # Connectivity info for Linux VM
-NIXADDR ?= 192.168.1.117
+NIXADDR ?= 192.168.1.192
 NIXPORT ?= 22
 NIXUSER ?= aditya
 
@@ -66,9 +66,7 @@ vm/switch:
 		sudo nixos-rebuild switch --flake \"/nix-config#${NIXNAME}\" \
 	"
 
-# This is for use after the installation
-# Lot to be improved
-.PHONY: switch
-switch:
+.PHONY: upload
+upload:
 	rsync -azvhP --exclude='.git/' $(MAKEFILE_DIR)/ nixos:/nix-config
 
