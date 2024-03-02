@@ -57,12 +57,12 @@ vm/copy:
 	rsync -azvhP -e 'ssh $(SSH_OPTIONS) -p$(NIXPORT)' \
 		--exclude='.git/' \
 		--rsync-path="sudo rsync" \
-		$(MAKEFILE_DIR)/ root@$(NIXADDR):/nix-config
+		$(MAKEFILE_DIR)/ $(NIXUSER)@$(NIXADDR):/nix-config
 
 # run the nixos-rebuild switch command. This does NOT copy files so you
 # have to run vm/copy before.
 vm/switch:
-	ssh $(SSH_OPTIONS) -p$(NIXPORT) root@$(NIXADDR) " \
+	ssh $(SSH_OPTIONS) -p$(NIXPORT) $(NIXUSER)@$(NIXADDR) " \
 		sudo nixos-rebuild switch --flake \"/nix-config#${NIXNAME}\" \
 	"
 

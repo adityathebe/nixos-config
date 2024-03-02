@@ -22,28 +22,6 @@
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
-  # console = {
-  #   font = "JetBrains Mono";
-  #   keyMap = "us";
-  #   useXkbConfig = true; # use xkb.options in tty.
-  # };
-
-  # Enable the X11 windowing system.
-  # services.xserver.enable = true;
-
-  # Configure keymap in X11
-  # services.xserver.xkb.layout = "us";
-  # services.xserver.xkb.options = "eurosign:e,caps:escape";
-
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
-  # Enable sound.
-  # sound.enable = true;
-  # hardware.pulseaudio.enable = true;
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.aditya = {
@@ -67,9 +45,9 @@
     bottom
     curl
     eza
-    gnumake
     gcc # for neovim (probably required by tree sitter)
     git
+    gnumake
     go
     jq
     neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
@@ -79,6 +57,8 @@
     wget
     zsh
     zsh-powerlevel10k
+    killall
+    xclip
   ];
 
   virtualisation.docker.enable = true;
@@ -115,6 +95,8 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+  services.openssh.settings.PasswordAuthentication = true;
+  services.openssh.settings.PermitRootLogin = "no";
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
