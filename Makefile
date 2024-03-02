@@ -1,5 +1,5 @@
 # Connectivity info for Linux VM
-NIXADDR ?= 192.168.1.158
+NIXADDR ?= 192.168.1.117
 NIXPORT ?= 22
 NIXUSER ?= aditya
 
@@ -38,7 +38,6 @@ vm/bootstrap0:
 		nixos-generate-config --root /mnt; \
 		sed --in-place '/system\.stateVersion = .*/a \
 			nix.settings.experimental-features = [\"nix-command\" \"flakes\"];\n \
-			nix.settings.trusted-public-keys = [\"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDs5rFHygPS8uCK+LJ4XOpenVrGk6ZUzNLb6w9eFiUI8 adityathebe\"];\n \
 			services.openssh.enable = true;\n \
 			services.openssh.settings.PasswordAuthentication = true;\n \
 			services.openssh.settings.PermitRootLogin = \"yes\";\n \
