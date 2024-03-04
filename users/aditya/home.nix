@@ -55,13 +55,6 @@
       { name = "powerlevel10k"; src = pkgs.zsh-powerlevel10k; file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";}
     ];
 
-    oh-my-zsh = {
-      enable = true;
-      plugins = [
-        "systemd"
-      ];
-    };
-
     shellAliases = {
       k9="killall -9";
       k15="killall -15";
@@ -75,6 +68,14 @@
       lg="eza -alF | grep -i";
       
       sudo="sudo ";
+
+      # systemd
+      sc-disable="systemctl disable";
+      sc-enable="systemctl enable";
+      sc-restart="systemctl restart";
+      sc-start="systemctl start";
+      sc-status="systemctl status";
+      sc-stop="systemctl stop";
 
       digs="dig +short";
       curldoh="curl --doh-url https://cloudflare-dns.com/dns-query";
