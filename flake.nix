@@ -15,9 +15,9 @@
     system = "x86_64-linux";
   in {
     nixosConfigurations = {
-      vm-intel = nixpkgs.lib.nixosSystem {
+      proxmox = nixpkgs.lib.nixosSystem {
         modules = [ 
-          ./machines/vm-intel.nix 
+          ./hosts/proxmox/configuration.nix 
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
@@ -28,8 +28,19 @@
           }
         ];
       };
-      vm-vbox = nixpkgs.lib.nixosSystem {
-        modules = [ ./machines/vm-vbox.nix ];
+      
+      virtualbox = nixpkgs.lib.nixosSystem {
+        modules = [ 
+          ./hosts/virtualbox/configuration.nix 
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.aditya.imports = [
+              ./users/aditya/home.nix
+            ];
+          }
+        ];
       };
     };
   };
