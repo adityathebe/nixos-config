@@ -1,6 +1,6 @@
 # https://github.com/notthebee/nix-config/blob/main/users/notthebee/dots.nix
 
-{ inputs, lib, config, pkgs,  ... }: 
+{ inputs, lib, config, pkgs, ... }: 
 {
   home = {
     username = "aditya";
@@ -33,6 +33,26 @@
   programs.nix-index = {
     enable = true;
     enableZshIntegration = true;
+  };
+
+  xdg.configFile = {
+    "nvim" = {
+      source = builtins.fetchGit {
+        url = "https://github.com/AstroNvim/AstroNvim";
+        rev = "d36af2f75369e3621312c87bd0e377e7d562fc72";
+      };
+    };
+    "nvim/lua/user" = {
+      source = builtins.fetchGit {
+        url = "https://github.com/adityathebe/astronvim";
+        rev = "f509363ff2229c324f040ffdd59a99bcca6c53ca";
+      };
+    };
+  };
+
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
   };
 
   programs.tmux = {
