@@ -121,6 +121,10 @@
     };
   };
 
+  security.sudo.extraConfig = ''
+    Defaults        timestamp_timeout=30
+  '';
+
   nix.settings.experimental-features = [ "flakes" "nix-command" ];
 
   # Open ports in the firewall.

@@ -35,6 +35,32 @@
     enableZshIntegration = true;
   };
 
+  programs.tmux = {
+    enable = true;
+    mouse = true;
+    prefix = "C-a";
+    keyMode = "vi";
+    sensibleOnTop = true;
+    terminal = "xterm-256color";
+    plugins = [
+      pkgs.tmuxPlugins.nord
+      pkgs.tmuxPlugins.vim-tmux-navigator
+    ];
+    extraConfig = ''
+      # So vim colors are rendered properly (but this isn't working right now)
+      set-option -sa terminal-overrides ',xterm-256color:RGB'
+
+      # Start new pane & window on the current path
+      bind '"' split-window -c "#{pane_current_path}"
+      bind % split-window -h -c "#{pane_current_path}"
+      bind c new-window -c "#{pane_current_path}"
+
+      # Shift Alt vim keys to switch windows
+      bind -n M-H previous-window
+      bind -n M-L next-window
+    '';
+  };
+
   programs.zsh = {
     enable = true;
 
