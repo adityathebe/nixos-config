@@ -35,20 +35,20 @@
     enableZshIntegration = true;
   };
 
-  xdg.configFile = {
-    "nvim" = {
-      source = builtins.fetchGit {
-        url = "https://github.com/AstroNvim/AstroNvim";
-        rev = "d36af2f75369e3621312c87bd0e377e7d562fc72";
-      };
-    };
-    "nvim/lua/user" = {
-      source = builtins.fetchGit {
-        url = "https://github.com/adityathebe/astronvim";
-        rev = "f509363ff2229c324f040ffdd59a99bcca6c53ca";
-      };
-    };
-  };
+  # xdg.configFile = {
+    # "nvim" = {
+    #   source = builtins.fetchGit {
+    #     url = "https://github.com/AstroNvim/AstroNvim";
+    #     rev = "d36af2f75369e3621312c87bd0e377e7d562fc72";
+    #   };
+    # };
+    # "nvim/lua/user" = {
+    #   source = builtins.fetchGit {
+    #     url = "https://github.com/adityathebe/astronvim";
+    #     rev = "f509363ff2229c324f040ffdd59a99bcca6c53ca";
+    #   };
+    # };
+  # };
 
   programs.neovim = {
     enable = true;
@@ -85,7 +85,15 @@
     enable = true;
 
     dotDir = ".config/zsh";
-    initExtra = "source ~/.config/zsh/.p10k.zsh";
+    initExtra = ''
+    source ~/.config/zsh/.p10k.zsh
+
+    # Bind auto-completion to Ctrl + E
+    bindkey '^E' expand-or-complete-prefix
+
+    # Bind end of line to Ctrl + E
+    bindkey '^E' end-of-line
+    '';
 
     syntaxHighlighting.enable = true;
     enableAutosuggestions = true;
@@ -94,7 +102,7 @@
     history = {
       size = 5000000000;
       save = 5000000000;
-      path = ".local/share/zsh/history";
+      path = "${config.home.homeDirectory}/.local/share/zsh/history";
     };
 
     plugins = [

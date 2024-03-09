@@ -44,6 +44,7 @@
     dig
     du-dust
     eza
+    file
     gcc # for neovim (probably required by tree sitter)
     git
     gnumake
@@ -52,6 +53,9 @@
     killall
     neovim
     ripgrep
+    cargo
+    rustc
+    rust-analyzer
     tmux
     watch
     wget
