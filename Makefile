@@ -70,3 +70,7 @@ vm/switch:
 upload:
 	rsync -azvhP --exclude='.git/' $(MAKEFILE_DIR)/ nixos:/nix-config
 
+.PHONY: secrets
+secrets:
+	rsync -azvhP ~/.ssh/adityathebe nixos:/home/$(NIXUSER)/.ssh
+

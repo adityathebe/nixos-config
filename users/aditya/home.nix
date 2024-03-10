@@ -1,6 +1,6 @@
 # https://github.com/notthebee/nix-config/blob/main/users/notthebee/dots.nix
 
-{ inputs, lib, config, pkgs, ... }: 
+{ config, pkgs, ... }: 
 {
   home = {
     username = "aditya";
@@ -154,10 +154,10 @@
       # Git
       cdr="cd $(git rev-parse --show-toplevel)"; # jumps to the root path of a git repository
       gb="git branch";
-      gca="git commit --amend'";
-      gco="git checkout'";
-      gp="git push'";
-      grh="git reset --hard'";
+      gca="git commit --amend";
+      gco="git checkout";
+      gp="git push";
+      grh="git reset --hard";
       gu="git reset HEAD"; # unstage a file
 
       vim="nvim";
@@ -185,6 +185,18 @@
     enable = true;
     userName  = "Aditya Thebe";
     userEmail = "contact@adityathebe.com";
+  };
+
+  programs.ssh = {
+    enable = true;
+    matchBlocks = {
+      "github.com" = {
+        user = "git";
+        hostname = "ssh.github.com";
+        port = 443;
+        identityFile = "~/.ssh/adityathebe";
+      };
+    };
   };
 
   programs.zoxide = {
