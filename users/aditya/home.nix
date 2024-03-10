@@ -13,6 +13,8 @@
     ];
   };
 
+  programs.home-manager.enable = true;
+
   programs.atuin = {
     enable = true;
     enableZshIntegration = true;
@@ -28,6 +30,11 @@
       enter_accept = true;
       keymap_mode = "vim-insert";
     };
+  };
+
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
   };
 
   programs.nix-index = {
@@ -180,5 +187,8 @@
     userEmail = "contact@adityathebe.com";
   };
 
-  programs.home-manager.enable = true;
+  programs.zoxide = {
+    enable = true;
+    enableZshIntegration = true;
+  };
 }

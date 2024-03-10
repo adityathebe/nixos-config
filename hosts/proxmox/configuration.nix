@@ -59,6 +59,7 @@
     tmux
     watch
     wget
+    yazi
     zsh
     zsh-powerlevel10k
   ];
