@@ -72,5 +72,7 @@ upload:
 
 .PHONY: secrets
 secrets:
-	rsync -azvhP ~/.ssh/adityathebe nixos:/home/$(NIXUSER)/.ssh
+	rsync -azvhP ~/.ssh/adityathebe ~/.ssh/adityathebe.pub nixos:/home/$(NIXUSER)/.ssh
+	rsync -azvhP ~/.kube nixos:/home/$(NIXUSER)/
+	rsync -azvhP ~/.aws nixos:/home/$(NIXUSER)/
 
